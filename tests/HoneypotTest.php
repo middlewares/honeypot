@@ -3,9 +3,10 @@
 namespace Middlewares\Tests;
 
 use Middlewares\Honeypot;
+use Middlewares\Utils\Dispatcher;
+use Middlewares\Utils\CallableMiddleware;
 use Zend\Diactoros\ServerRequest;
 use Zend\Diactoros\Response;
-use mindplay\middleman\Dispatcher;
 
 class HoneypotTest extends \PHPUnit_Framework_TestCase
 {
@@ -33,9 +34,9 @@ class HoneypotTest extends \PHPUnit_Framework_TestCase
 
         $response = (new Dispatcher([
             new Honeypot(),
-            function () {
+            new CallableMiddleware(function () {
                 return new Response();
-            },
+            }),
         ]))->dispatch($request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
