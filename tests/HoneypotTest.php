@@ -29,9 +29,9 @@ class HoneypotTest extends \PHPUnit_Framework_TestCase
         $request = Factory::createServerRequest([], $method)
             ->withParsedBody($parsedBody);
 
-        $response = (new Dispatcher([
+        $response = Dispatcher::run([
             new Honeypot(),
-        ]))->dispatch($request);
+        ], $request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
 
