@@ -4,9 +4,7 @@ namespace Middlewares\Tests;
 
 use Middlewares\Honeypot;
 use Middlewares\Utils\Dispatcher;
-use Middlewares\Utils\CallableMiddleware;
-use Zend\Diactoros\ServerRequest;
-use Zend\Diactoros\Response;
+use Middlewares\Utils\Factory;
 
 class HoneypotTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,15 +26,11 @@ class HoneypotTest extends \PHPUnit_Framework_TestCase
      */
     public function testHoneypot($method, array $parsedBody, $valid)
     {
-        $request = (new ServerRequest())
-            ->withMethod($method)
+        $request = Factory::createServerRequest([], $method)
             ->withParsedBody($parsedBody);
 
         $response = (new Dispatcher([
             new Honeypot(),
-            new CallableMiddleware(function () {
-                return new Response();
-            }),
         ]))->dispatch($request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
