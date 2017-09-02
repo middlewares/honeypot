@@ -2,11 +2,12 @@
 
 namespace Middlewares\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Middlewares\Honeypot;
 use Middlewares\Utils\Dispatcher;
 use Middlewares\Utils\Factory;
 
-class HoneypotTest extends \PHPUnit_Framework_TestCase
+class HoneypotTest extends TestCase
 {
     public function honeypotProvider()
     {
