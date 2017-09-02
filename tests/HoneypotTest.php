@@ -2,10 +2,10 @@
 
 namespace Middlewares\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Middlewares\Honeypot;
 use Middlewares\Utils\Dispatcher;
 use Middlewares\Utils\Factory;
+use PHPUnit\Framework\TestCase;
 
 class HoneypotTest extends TestCase
 {
@@ -24,6 +24,8 @@ class HoneypotTest extends TestCase
 
     /**
      * @dataProvider honeypotProvider
+     * @param mixed $method
+     * @param mixed $valid
      */
     public function testHoneypot($method, array $parsedBody, $valid)
     {
