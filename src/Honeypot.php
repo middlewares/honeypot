@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Middlewares;
 
@@ -21,12 +22,8 @@ class Honeypot implements MiddlewareInterface
 
     /**
      * Build a new honeypot field.
-     *
-     * @param string|null $name
-     *
-     * @return string
      */
-    public static function getField($name = null)
+    public static function getField(string $name = null): string
     {
         $name = $name ?: self::$currentName;
 
@@ -35,23 +32,16 @@ class Honeypot implements MiddlewareInterface
 
     /**
      * Set the field name.
-     *
-     * @param string $name
      */
-    public function __construct($name = 'hpt_name')
+    public function __construct(string $name = 'hpt_name')
     {
         $this->name = self::$currentName = $name;
     }
 
     /**
      * Process a server request and return a response.
-     *
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (!$this->isValid($request)) {
             return Utils\Factory::createResponse(403);
@@ -62,12 +52,8 @@ class Honeypot implements MiddlewareInterface
 
     /**
      * Check whether the request is valid.
-     *
-     * @param ServerRequestInterface $request
-     *
-     * @return bool
      */
-    private function isValid(ServerRequestInterface $request)
+    private function isValid(ServerRequestInterface $request): bool
     {
         $method = strtoupper($request->getMethod());
 
