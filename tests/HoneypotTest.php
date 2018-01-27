@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Middlewares\Tests;
 
@@ -9,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class HoneypotTest extends TestCase
 {
-    public function honeypotProvider()
+    public function honeypotProvider(): array
     {
         return [
             ['POST', ['hpt_name' => 'not-null'], false],
@@ -24,10 +25,8 @@ class HoneypotTest extends TestCase
 
     /**
      * @dataProvider honeypotProvider
-     * @param mixed $method
-     * @param mixed $valid
      */
-    public function testHoneypot($method, array $parsedBody, $valid)
+    public function testHoneypot(string $method, array $parsedBody, bool $valid)
     {
         $request = Factory::createServerRequest([], $method)
             ->withParsedBody($parsedBody);
@@ -35,8 +34,6 @@ class HoneypotTest extends TestCase
         $response = Dispatcher::run([
             new Honeypot(),
         ], $request);
-
-        $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
 
         if ($valid) {
             $this->assertEquals(200, $response->getStatusCode());
