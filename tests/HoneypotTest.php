@@ -28,7 +28,7 @@ class HoneypotTest extends TestCase
      */
     public function testHoneypot(string $method, array $parsedBody, bool $valid)
     {
-        $request = Factory::createServerRequest([], $method)
+        $request = Factory::createServerRequest($method, '/')
             ->withParsedBody($parsedBody);
 
         $response = Dispatcher::run([
