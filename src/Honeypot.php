@@ -3,8 +3,7 @@ declare(strict_types = 1);
 
 namespace Middlewares;
 
-use Middlewares\Utils\Factory;
-use Psr\Http\Message\ResponseFactoryInterface;
+use Middlewares\Utils\Traits\HasResponseFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -12,6 +11,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class Honeypot implements MiddlewareInterface
 {
+    use HasResponseFactory;
+
     /**
      * @var string
      */
@@ -21,11 +22,6 @@ class Honeypot implements MiddlewareInterface
      * @var string
      */
     private $name = 'hpt_name';
-
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $responseFactory;
 
     /**
      * Build a new honeypot field.
@@ -46,24 +42,12 @@ class Honeypot implements MiddlewareInterface
     }
 
     /**
-     * Set the response factory used.
-     */
-    public function responseFactory(ResponseFactoryInterface $responseFactory): self
-    {
-        $this->responseFactory = $responseFactory;
-
-        return $this;
-    }
-
-    /**
      * Process a server request and return a response.
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (!$this->isValid($request)) {
-            $responseFactory = $this->responseFactory ?: Factory::getResponseFactory();
-
-            return $responseFactory->createResponse(403);
+            return $this->createResponse(403);
         }
 
         return $handler->handle($request);
