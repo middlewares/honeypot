@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.0] - 2018-08-18
+
+### Added
+
+- [#1] New helper `Honeypot::getHiddenField()` to generate the field with inline css to hide it.
+
 ## [1.1.0] - 2018-08-04
 
 ### Added
@@ -64,7 +70,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[#1]: https://github.com/middlewares/honeypot/issues/1
 
+[1.2.0]: https://github.com/middlewares/honeypot/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/middlewares/honeypot/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/middlewares/honeypot/compare/v0.5.0...v1.0.0
 [0.5.0]: https://github.com/middlewares/honeypot/compare/v0.4.0...v0.5.0
