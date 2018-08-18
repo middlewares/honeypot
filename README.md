@@ -87,6 +87,11 @@ Example:
 </html>
 ```
 
+#### `Honeypot::getHiddenField($name = null)`
+
+This static method generates the input field just like `getField()` does, but adds inline CSS to hide the field directly. Note: This may be easier to detect for some bots.
+If you want to get creative with hiding the field, use `getField()` in combination with custom CSS (or JS).
+
 ---
 
 Please see [CHANGELOG](CHANGELOG.md) for more information about recent changes and [CONTRIBUTING](CONTRIBUTING.md) for contributing details.

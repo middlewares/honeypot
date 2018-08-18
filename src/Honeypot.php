@@ -34,6 +34,16 @@ class Honeypot implements MiddlewareInterface
     }
 
     /**
+     * Build a new honeypot field, hidden via inline CSS.
+     */
+    public static function getHiddenField(string $name = null): string
+    {
+        $name = $name ?: self::$currentName;
+
+        return sprintf('<input type="text" name="%s" style="display: none">', $name);
+    }
+
+    /**
      * Set the field name.
      */
     public function __construct(string $name = 'hpt_name')
