@@ -3,7 +3,6 @@ declare(strict_types = 1);
 
 namespace Middlewares;
 
-use Middlewares\Utils\Traits\HasResponseFactory;
 use Middlewares\Utils\Factory;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -13,12 +12,10 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class Honeypot implements MiddlewareInterface
 {
-    use HasResponseFactory;
-
     /**
-     * @var string
+     * @var Honeypot
      */
-    private static $currentName = 'hpt_name';
+    private static $current;
 
     /**
      * @var string
@@ -26,13 +23,22 @@ class Honeypot implements MiddlewareInterface
     private $name = 'hpt_name';
 
     /**
+     * @var ResponseFactoryInterface
+     */
+    private $responseFactory;
+
+    /**
      * Build a new honeypot field.
      */
-    public static function getField(string $name = null): string
+    public static function getField(string $name = null, string $label = null): string
     {
-        $name = $name ?: self::$currentName;
+        $label = empty($label) ? null : htmlspecialchars($label, ENT_QUOTES, 'UTF-8');
 
-        return sprintf('<input type="text" name="%s">', $name);
+        return sprintf(
+            '<input type="text" name="%s" aria-label="%s">',
+            $name ?: self::$current->name,
+            $label
+        );
     }
 
     /**
@@ -40,9 +46,10 @@ class Honeypot implements MiddlewareInterface
      */
     public static function getHiddenField(string $name = null): string
     {
-        $name = $name ?: self::$currentName;
-
-        return sprintf('<input type="text" name="%s" style="display: none">', $name);
+        return sprintf(
+            '<input type="text" name="%s" style="display: none">',
+            $name ?: self::$current->name
+        );
     }
 
     /**
@@ -50,8 +57,9 @@ class Honeypot implements MiddlewareInterface
      */
     public function __construct(string $name = 'hpt_name', ResponseFactoryInterface $responseFactory = null)
     {
-        $this->name = self::$currentName = $name;
+        $this->name = $name;
         $this->responseFactory = $responseFactory ?: Factory::getResponseFactory();
+        self::$current = $this;
     }
 
     /**
@@ -60,7 +68,7 @@ class Honeypot implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (!$this->isValid($request)) {
-            return $this->createResponse(403);
+            return $this->responseFactory->createResponse(403);
         }
 
         return $handler->handle($request);
