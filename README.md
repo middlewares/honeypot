@@ -108,7 +108,7 @@ If you want to get creative with hiding the field, use `getField()` in combinati
 
 ```html
 <form method="POST">
-    <?= Middlewares\Honeypot::getHiddenField('Please, do not fill this input') ?>
+    <?= Middlewares\Honeypot::getHiddenField() ?>
     <label>
         User:
         <input type="text" name="username">
