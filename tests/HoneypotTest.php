@@ -44,8 +44,11 @@ class HoneypotTest extends TestCase
 
     public function testHoneypotFields()
     {
-        $this->assertEquals('<input type="text" name="hpt_name">', Honeypot::getField());
-        $this->assertEquals('<input type="text" name="foo">', Honeypot::getField('foo'));
+        $this->assertEquals('<input type="text" name="hpt_name" aria-label="">', Honeypot::getField());
+        $this->assertEquals(
+            '<input type="text" name="foo" aria-label="Do not fill &quot;this&quot;">',
+            Honeypot::getField('foo', 'Do not fill "this"')
+        );
 
         $this->assertEquals('<input type="text" name="hpt_name" style="display: none">', Honeypot::getHiddenField());
         $this->assertEquals('<input type="text" name="foo" style="display: none">', Honeypot::getHiddenField('foo'));
