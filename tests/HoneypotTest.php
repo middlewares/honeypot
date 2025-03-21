@@ -10,6 +10,9 @@ use PHPUnit\Framework\TestCase;
 
 class HoneypotTest extends TestCase
 {
+    /**
+     * @return array<int, list<array<string, int|string|null>|bool|string>>
+     */
     public function honeypotProvider(): array
     {
         return [
@@ -25,8 +28,10 @@ class HoneypotTest extends TestCase
 
     /**
      * @dataProvider honeypotProvider
+     *
+     * @param array<string,string> $parsedBody
      */
-    public function testHoneypot(string $method, array $parsedBody, bool $valid)
+    public function testHoneypot(string $method, array $parsedBody, bool $valid): void
     {
         $request = Factory::createServerRequest($method, '/')
             ->withParsedBody($parsedBody);
@@ -42,7 +47,7 @@ class HoneypotTest extends TestCase
         }
     }
 
-    public function testHoneypotFields()
+    public function testHoneypotFields(): void
     {
         $this->assertEquals('<input type="text" name="hpt_name" aria-label="">', Honeypot::getField());
         $this->assertEquals(
