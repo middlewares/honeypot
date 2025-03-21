@@ -87,6 +87,7 @@ class Honeypot implements MiddlewareInterface
 
         $data = $request->getParsedBody();
 
+        // @phpstan-ignore-next-line
         return isset($data[$this->name]) && $data[$this->name] === '';
     }
 }
