@@ -30,7 +30,7 @@ class Honeypot implements MiddlewareInterface
     /**
      * Build a new honeypot field.
      */
-    public static function getField(string $name = null, string $label = null): string
+    public static function getField(?string $name = null, ?string $label = null): string
     {
         $label = empty($label) ? null : htmlspecialchars($label, ENT_QUOTES, 'UTF-8');
 
@@ -44,7 +44,7 @@ class Honeypot implements MiddlewareInterface
     /**
      * Build a new honeypot field, hidden via inline CSS.
      */
-    public static function getHiddenField(string $name = null): string
+    public static function getHiddenField(?string $name = null): string
     {
         return sprintf(
             '<input type="text" name="%s" style="display: none">',
@@ -55,7 +55,7 @@ class Honeypot implements MiddlewareInterface
     /**
      * Set the field name.
      */
-    public function __construct(string $name = 'hpt_name', ResponseFactoryInterface $responseFactory = null)
+    public function __construct(string $name = 'hpt_name', ?ResponseFactoryInterface $responseFactory = null)
     {
         $this->name = $name;
         $this->responseFactory = $responseFactory ?: Factory::getResponseFactory();
@@ -87,6 +87,7 @@ class Honeypot implements MiddlewareInterface
 
         $data = $request->getParsedBody();
 
+        // @phpstan-ignore-next-line
         return isset($data[$this->name]) && $data[$this->name] === '';
     }
 }

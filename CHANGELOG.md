@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2025-03-21
+### Added
+- Support for PHP 8.4
+
 ## [2.0.1] - 2020-12-02
 ### Added
 - Support for PHP 8
@@ -67,6 +71,7 @@ First version
 
 [#1]: https://github.com/middlewares/honeypot/issues/1
 
+[2.1.0]: https://github.com/middlewares/honeypot/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/middlewares/honeypot/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/middlewares/honeypot/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/middlewares/honeypot/compare/v1.1.0...v1.2.0
