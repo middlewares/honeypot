@@ -45,7 +45,7 @@ In your forms, you have to include a `<input>` element that will be used as trap
     <body>
         <form method="POST">
             <!-- This is the honeypot -->
-            <input type="text" name="hpt_name" arial-label="Please, do not fill this input">
+            <input type="text" name="hpt_name" aria-label="Please, do not fill this input">
 
             <label>
                 User:
